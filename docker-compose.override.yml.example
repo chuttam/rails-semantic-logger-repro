@@ -1,0 +1,22 @@
+# Example override file for connecting to PostgreSQL in an external Docker network
+# 
+# To use this:
+# 1. Copy this file to docker-compose.override.yml
+# 2. Set POSTGRES_NETWORK in your .env file to your PostgreSQL network name
+# 3. Update DATABASE_HOST in .env to your PostgreSQL container name
+#
+# If you don't need to connect to an external PostgreSQL network (e.g., PostgreSQL
+# is running on your host machine), you can delete this file and update DATABASE_HOST
+# in .env to use "host.docker.internal" instead.
+
+services:
+  web:
+    networks:
+      - default
+      - postgres_network
+
+networks:
+  postgres_network:
+    external: true
+    name: ${POSTGRES_NETWORK}
+

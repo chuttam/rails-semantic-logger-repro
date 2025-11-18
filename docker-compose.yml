@@ -1,0 +1,22 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    env_file:
+      - .env
+    environment:
+      - RAILS_ENV=development
+    command: rails server -b 0.0.0.0
+    stdin_open: true
+    tty: true
+    # Networks are configured in docker-compose.override.yml if you need to connect
+    # to an external PostgreSQL Docker network. See docker-compose.override.yml.example
+    # If PostgreSQL is on your host machine, use DATABASE_HOST=host.docker.internal in .env
+
+volumes:
+  bundle_cache:
+
