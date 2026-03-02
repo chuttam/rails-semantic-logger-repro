@@ -41,6 +41,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Semantic Logger for Rails - replaces default Rails logger
+# gem "rails_semantic_logger", github: "chuttam/rails_semantic_logger", branch: "log-flood-patch"
 gem "rails_semantic_logger"
 
 # Background job processing with Sidekiq
