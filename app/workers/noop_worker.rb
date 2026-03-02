@@ -1,12 +1,15 @@
 class NoopWorker < ApplicationWorker
   def perform
-    puts 'Via puts: worker running noop worker to test rails semantic logger issues'
-    Rails.logger.info 'Via logger: worker running noop worker to test rails semantic logger issues'
+    # Equivalent to SemanticLogger['NoopWorker'].info
+    message_test = 'Start NoopWorker to test rails semantic logger issues'
+    message_with_start = "Contains start, but shold not filtered, since doesn't come from Sidekiq itself. Comes from logger instance."
+    puts "Via puts: #{message_test}"
+    Rails.logger.info "Via logger: #{message_test}"
+    puts "Via puts: #{message_with_start}"
+    Rails.logger.info "Via logger: #{message_with_start}"
 
-    puts 'Via puts: contains start . Should be filtered.'
-    Rails.logger.info 'Via logger: contains start . Should be filtered.'
-
-    # Log via SemanticLogger directly, scoped to NoopWorker (not Rails)
-    # SemanticLogger['NoopWorker'].info 'Via SemanticLogger: NoopWorker logger test message'
+    # Equivalent to "Start #perform" logs.
+    Sidekiq.logger.info 'start start. Filtered'
+    Sidekiq.logger.info 'foo foo. Not filtered'
   end
 end
